@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import Button from '@/components/ui/Button';
+import SavingsCard from '@/components/SavingsCard';
 
 export default function Landing() {
   return (
@@ -7,7 +9,7 @@ export default function Landing() {
         <h1 className="text-2xl font-bold text-primary">Rivvo</h1>
         <nav className="space-x-4">
           <Link to="/login" className="text-sm text-muted-foreground hover:text-foreground">Login</Link>
-          <Link to="/signup" className="text-sm text-primary font-medium">Get started</Link>
+          <Link to="/signup"><Button variant="primary">Get started</Button></Link>
         </nav>
       </header>
 
@@ -17,8 +19,8 @@ export default function Landing() {
           <p className="text-muted-foreground mb-6">Rivvo helps you track everyday expenses, understand spending habits, and keep your monthly budgets on track — with a minimal, fast interface.</p>
 
           <div className="flex gap-4">
-            <Link to="/signup" className="inline-block px-6 py-3 rounded-md bg-primary text-primary-foreground font-medium">Create account</Link>
-            <Link to="/login" className="inline-block px-6 py-3 rounded-md bg-transparent border border-muted text-muted-foreground">Sign in</Link>
+            <Link to="/signup"><Button variant="primary">Create account</Button></Link>
+            <Link to="/login" className="inline-block"><Button variant="ghost">Sign in</Button></Link>
           </div>
 
           <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-muted-foreground">
@@ -29,10 +31,13 @@ export default function Landing() {
           </ul>
         </section>
 
-        <aside className="bg-card border rounded-lg p-6">
-          <h3 className="font-semibold mb-3">Monthly Overview (Preview)</h3>
-          <div className="w-full h-48 bg-muted/40 rounded-lg flex items-center justify-center text-muted-foreground">Charts & stats preview</div>
-          <p className="text-sm text-muted-foreground mt-4">A calm dashboard designed for quick decisions and focused tracking.</p>
+        <aside className="space-y-4">
+          <SavingsCard goal={1200} saved={720} onCelebrate={() => { /* demo – will wire confetti in Dashboard */ }} />
+          <div className="bg-card border rounded-lg p-4">
+            <h3 className="font-semibold mb-3">Monthly Overview (Preview)</h3>
+            <div className="w-full h-40 bg-muted/40 rounded-lg flex items-center justify-center text-muted-foreground">Charts & stats preview</div>
+            <p className="text-sm text-muted-foreground mt-4">A calm dashboard designed for quick decisions and focused tracking.</p>
+          </div>
         </aside>
       </main>
 

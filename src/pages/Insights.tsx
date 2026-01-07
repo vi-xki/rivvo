@@ -43,7 +43,7 @@ export default function Insights() {
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie data={samplePie} dataKey="value" nameKey="name" outerRadius={80} fill="#8884d8" label>
-                {samplePie.map((entry, index) => (
+                {samplePie.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>

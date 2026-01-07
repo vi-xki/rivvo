@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, PieChart, Wallet, Settings, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import AddExpense from '@/components/AddExpense';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import { useAuth } from '@/store/useAuth';
 
 interface LayoutProps {
@@ -22,9 +23,12 @@ export default function Layout({ children }: LayoutProps) {
     return (
         <div className="flex min-h-screen bg-background text-foreground">
             {/* Sidebar */}
-            <aside className="w-64 border-r bg-card hidden md:flex flex-col fixed inset-y-0 left-0 z-50">
-                <div className="p-6">
+            <aside className="w-64 border-r bg-card hidden md:flex flex-col fixed inset-y-0 left-0 z-50 shadow-card rounded-r-lg">
+                <div className="p-6 flex items-center justify-between">
                     <h1 className="text-2xl font-bold text-primary tracking-tight">Rivvo</h1>
+                    <div className="flex items-center gap-2">
+                      <ThemeToggle />
+                    </div>
                 </div>
                 <nav className="flex-1 px-4 space-y-2">
                     {navItems.map((item) => {
@@ -35,10 +39,10 @@ export default function Layout({ children }: LayoutProps) {
                                 key={item.href}
                                 to={item.href}
                                 className={cn(
-                                    "flex items-center gap-3 px-4 py-3 rounded-md transition-all duration-200",
+                                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200",
                                     isActive
                                         ? "bg-primary/10 text-primary"
-                                        : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                                        : "text-muted-foreground hover:bg-muted/5 hover:text-foreground"
                                 )}
                             >
                                 <Icon size={20} />
@@ -53,7 +57,7 @@ export default function Layout({ children }: LayoutProps) {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 md:ml-64 min-h-screen bg-muted/5 relative">
+            <main className="flex-1 md:ml-64 min-h-screen bg-gradient-to-b from-background/90 to-white relative">
                 {children}
 
                 {/* Add Expense Floating Button */}

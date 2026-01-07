@@ -25,7 +25,7 @@ localStorage.setItem('rivvo:user', JSON.stringify({ id: 'user_123', name: 'Jane 
 // localStorage.setItem('rivvo-auth', JSON.stringify({
 //   state: { token: 'eyJhbGci...FAKE_SIGNATURE', user: { id: 'user_123', name: 'Jane Doe', email: 'jane@example.com', currency: 'USD' }, loading: false, error: null }
 // }));
-
+ 
 
 
 export const useAuth = create<AuthState>()(
