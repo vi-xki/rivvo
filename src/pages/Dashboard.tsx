@@ -5,11 +5,15 @@ import AddExpense from '@/components/AddExpense';
 import Button from '@/components/ui/Button';
 import Progress from '@/components/ui/Progress';
 import SavingsCard from '@/components/SavingsCard';
+import GoalModal from '@/components/GoalModal';
+import { useGoals } from '@/store/useGoals';
+import GoalCard from '@/components/GoalCard';
 
 export default function Dashboard() {
     const [summary, setSummary] = useState<Summary | null>(null);
     const [loading, setLoading] = useState(true);
     const [openAdd, setOpenAdd] = useState(false);
+    const [openGoal, setOpenGoal] = useState(false);
 
     useEffect(() => {
         let mounted = true;
@@ -81,6 +85,25 @@ export default function Dashboard() {
                     <div className="text-sm text-muted-foreground">View your latest expenses on the History page.</div>
                 </section>
             </div>
+
+            <div className="mt-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold">Goals</h2>
+                <div className="flex items-center gap-2">
+                  <Button variant="ghost" onClick={() => setOpenGoal(true)}>New goal</Button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {useGoals((s) => s.goals).length === 0 ? (
+                  <div className="bg-card border rounded-xl p-6 text-muted-foreground"> — create one to get started.</div>
+                ) : (
+                  useGoals((s) => s.goals).map((g) => <GoalCard key={g.id} goal={g} />)
+                )}
+              </div>
+            </div>
+
+            <GoalModal open={openGoal} onClose={() => setOpenGoal(false)} />
 
             <div className="mt-6">
               <SavingsCard goal={1200} saved={summary ? Math.max(0, Math.round((summary.remaining || 0) / 1)) : 720} onCelebrate={fireConfetti} />

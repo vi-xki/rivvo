@@ -34,7 +34,10 @@ export default function Landing() {
         <aside className="space-y-4">
           <SavingsCard goal={1200} saved={720} onCelebrate={() => { /* demo – will wire confetti in Dashboard */ }} />
           <div className="bg-card border rounded-lg p-4">
-            <h3 className="font-semibold mb-3">Monthly Overview (Preview)</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold mb-3">Monthly Overview (Preview)</h3>
+              <span className="inline-flex items-center px-2 py-1 text-xs rounded bg-highlight text-white font-medium">New</span>
+            </div>
             <div className="w-full h-40 bg-muted/40 rounded-lg flex items-center justify-center text-muted-foreground">Charts & stats preview</div>
             <p className="text-sm text-muted-foreground mt-4">A calm dashboard designed for quick decisions and focused tracking.</p>
           </div>

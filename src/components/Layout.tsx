@@ -4,6 +4,8 @@ import { LayoutDashboard, PieChart, Wallet, Settings, LogOut } from 'lucide-reac
 import { cn } from '@/lib/utils';
 import AddExpense from '@/components/AddExpense';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import SidebarSavings from '@/components/SidebarSavings';
+import MarketBackground from '@/components/MarketBackground';
 import { useAuth } from '@/store/useAuth';
 
 interface LayoutProps {
@@ -23,12 +25,16 @@ export default function Layout({ children }: LayoutProps) {
     return (
         <div className="flex min-h-screen bg-background text-foreground">
             {/* Sidebar */}
-            <aside className="w-64 border-r bg-card hidden md:flex flex-col fixed inset-y-0 left-0 z-50 shadow-card rounded-r-lg">
-                <div className="p-6 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold text-primary tracking-tight">Rivvo</h1>
-                    <div className="flex items-center gap-2">
-                      <ThemeToggle />
+            <aside className="w-64 border-r bg-card sidebar-gradient hidden md:flex flex-col fixed inset-y-0 left-0 z-50 shadow-card rounded-r-lg">
+                <div className="p-6">
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-2xl font-bold text-primary tracking-tight">Rivvo</h1>
+                        <div className="flex items-center gap-2">
+                          <ThemeToggle />
+                        </div>
                     </div>
+
+                    <SidebarSavings />
                 </div>
                 <nav className="flex-1 px-4 space-y-2">
                     {navItems.map((item) => {
@@ -57,7 +63,10 @@ export default function Layout({ children }: LayoutProps) {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 md:ml-64 min-h-screen bg-gradient-to-b from-background/90 to-white relative">
+            <main className="flex-1 md:ml-64 min-h-screen bg-gradient-to-b from-background/90 to-white relative overflow-hidden">
+                {/* decorative market background */}
+                <MarketBackground />
+
                 {children}
 
                 {/* Add Expense Floating Button */}

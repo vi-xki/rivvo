@@ -1,7 +1,7 @@
 import React from 'react';
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'ghost' | 'secondary';
+  variant?: 'primary' | 'ghost' | 'secondary' | 'highlight';
 };
 
 export default function Button({ variant = 'primary', className = '', children, ...rest }: Props) {
@@ -11,6 +11,8 @@ export default function Button({ variant = 'primary', className = '', children, 
       ? 'bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 shadow'
       : variant === 'secondary'
       ? 'bg-accent text-white hover:opacity-95 active:scale-95'
+      : variant === 'highlight'
+      ? 'bg-highlight text-white hover:bg-highlight/90 active:scale-95 shadow'
       : 'bg-transparent text-foreground hover:bg-muted/5';
 
   return (

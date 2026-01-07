@@ -8,7 +8,8 @@
     --primary: 146 62% 37%;      /* emerald 500 */
     --primary-foreground: 0 0% 100%;
     --accent: 187 92% 37%;       /* cyan/teal accent */
-    --highlight: 38 96% 49%;     /* amber for highlights */
+    --highlight: 351 94% 62%;    /* coral highlight (FB7185) */
+    --highlight-foreground: 0 0% 100%;
     --success: 146 62% 37%;
     --warning: 38 96% 49%;
     --secondary: 210 40% 96.1%;
@@ -48,6 +49,78 @@
     color: hsl(var(--foreground));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease;
+  }
+
+  /* Sidebar gradient that gently decreases color density from top -> bottom */
+  .sidebar-gradient {
+    background: linear-gradient(180deg, hsl(var(--primary) / 0.12) 0%, hsl(var(--primary) / 0.03) 100%);
+    /* subtle sparkline background for the sidebar */
+    position: relative;
+    overflow: hidden;
+  }
+  .sidebar-gradient::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 20px;
+    height: 36px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.06), transparent);
+    border-radius: 9999px;
+    transform: translateY(6px) scaleY(0.9);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .dark .sidebar-gradient {
+    /* slightly stronger in dark so it remains visible */
+    background: linear-gradient(180deg, hsl(var(--primary) / 0.14) 0%, hsl(var(--primary) / 0.04) 100%);
+  }
+
+  /* subtle parallax wave animations for MarketBackground SVG */
+  @keyframes wave-1 {
+    0% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(-28px) translateY(6px); }
+    100% { transform: translateX(0) translateY(0); }
+  }
+  @keyframes wave-2 {
+    0% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(36px) translateY(-4px); }
+    100% { transform: translateX(0) translateY(0); }
+  }
+  @keyframes wave-3 {
+    0% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(-18px) translateY(3px); }
+    100% { transform: translateX(0) translateY(0); }
+  }
+
+  .wave-1 { animation: wave-1 18s ease-in-out infinite; transform-origin: 50% 50%; will-change: transform; }
+  .wave-2 { animation: wave-2 26s ease-in-out infinite; transform-origin: 50% 50%; will-change: transform; }
+  .wave-3 { animation: wave-3 34s ease-in-out infinite; transform-origin: 50% 50%; will-change: transform; }
+
+  /* intensity modes: 'strong' (landing) vs 'subtle' (inner pages) */
+  .market-intensity-strong { --wave1-x: -32px; --wave1-y: 8px; --wave2-x: 40px; --wave2-y: -6px; --wave3-x: -22px; --wave3-y: 4px; --wave1-opacity: 0.12; --wave2-opacity: 0.08; --wave3-opacity: 0.06; }
+  .market-intensity-subtle { --wave1-x: -12px; --wave1-y: 3px; --wave2-x: 16px; --wave2-y: -2px; --wave3-x: -8px; --wave3-y: 2px; --wave1-opacity: 0.06; --wave2-opacity: 0.04; --wave3-opacity: 0.03; }
+
+  @keyframes wave-1 {
+    0% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(var(--wave1-x, -28px)) translateY(var(--wave1-y, 6px)); }
+    100% { transform: translateX(0) translateY(0); }
+  }
+  @keyframes wave-2 {
+    0% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(var(--wave2-x, 36px)) translateY(var(--wave2-y, -4px)); }
+    100% { transform: translateX(0) translateY(0); }
+  }
+  @keyframes wave-3 {
+    0% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(var(--wave3-x, -18px)) translateY(var(--wave3-y, 3px)); }
+    100% { transform: translateX(0) translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wave-1, .wave-2, .wave-3 { animation: none !important; }
   }
 }
 

@@ -18,7 +18,7 @@ export default function SavingsCard({ goal, saved, onCelebrate }: Props) {
           <div className="text-sm text-muted-foreground">of {new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(goal)}</div>
         </div>
         <div className="ml-4">
-          <Button variant="secondary" onClick={onCelebrate}>Celebrate</Button>
+          <Button variant="highlight" onClick={onCelebrate}>Celebrate</Button>
         </div>
       </div>
 
