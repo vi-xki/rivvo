@@ -5,7 +5,7 @@ import Button from '@/components/ui/Button';
 
 export default function Expenses() {
   const [page, setPage] = useState(1);
-  const { list, loading, error, fetchExpenses, deleteExpense, total } = useExpenses();
+  const { list, loading, error, fetchExpenses, deleteExpense, total, hasMore } = useExpenses();
 
   useEffect(() => {
     fetchExpenses({}, page);
@@ -51,7 +51,7 @@ export default function Expenses() {
           {loading ? (
             <Skeleton className="h-8 w-24" />
           ) : (
-            <Button onClick={() => setPage((p) => p + 1)} disabled={list.length === 0}>{list.length === 0 ? 'No more' : 'Load more'}</Button>
+            <Button onClick={() => setPage((p) => p + 1)} disabled={!hasMore}>{hasMore ? 'Load more' : 'No more'}</Button>
           )}
         </div>
 

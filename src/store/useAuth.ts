@@ -17,17 +17,6 @@ type AuthState = {
 };
 
 
-
-localStorage.setItem('rivvo:token', 'eyJhbGci...FAKE_SIGNATURE');
-localStorage.setItem('rivvo:user', JSON.stringify({ id: 'user_123', name: 'Jane Doe', email: 'jane@example.com', currency: 'USD' }));
-
-// // Optional: set the zustand persisted state directly
-// localStorage.setItem('rivvo-auth', JSON.stringify({
-//   state: { token: 'eyJhbGci...FAKE_SIGNATURE', user: { id: 'user_123', name: 'Jane Doe', email: 'jane@example.com', currency: 'USD' }, loading: false, error: null }
-// }));
-  
- 
-
 export const useAuth = create<AuthState>()(
   persist(
     (set, get) => ({
@@ -37,6 +26,7 @@ export const useAuth = create<AuthState>()(
       error: null,
       setToken: (t) => {
         set({ token: t });
+        console.log('Setting token in store:', t);
         if (t) localStorage.setItem('rivvo:token', t);
         else localStorage.removeItem('rivvo:token');
       },
@@ -52,21 +42,11 @@ export const useAuth = create<AuthState>()(
           get().setToken(token);
           get().setUser(user);
 
-
-          localStorage.setItem('rivvo:token', 'eyJhbGci...FAKE_SIGNATURE');
-            localStorage.setItem('rivvo:user', JSON.stringify({ id: 'user_123', name: 'Jane Doe', email: 'jane@example.com', currency: 'USD' }));
-
         } catch (err: any) {
-            localStorage.setItem('rivvo:token', 'eyJhbGci...FAKE_SIGNATURE');
-localStorage.setItem('rivvo:user', JSON.stringify({ id: 'user_123', name: 'Jane Doe', email: 'jane@example.com', currency: 'USD' }));
-
           set({ error: err?.response?.data?.message || err.message });
           throw err;
         } finally {
-            localStorage.setItem('rivvo:token', 'eyJhbGci...FAKE_SIGNATURE');
-localStorage.setItem('rivvo:user', JSON.stringify({ id: 'user_123', name: 'Jane Doe', email: 'jane@example.com', currency: 'USD' }));
 
- 
           set({ loading: false });
         }
       },

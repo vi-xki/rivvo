@@ -12,6 +12,7 @@ type ExpenseState = {
   loading: boolean;
   error: string | null;
   total: number;
+  hasMore: boolean;
   fetchExpenses: (filters?: Filters, page?: number) => Promise<void>;
   addExpense: (payload: Partial<Expense>) => Promise<Expense | null>;
   deleteExpense: (id: string) => Promise<void>;
@@ -22,11 +23,36 @@ export const useExpenses = create<ExpenseState>((set, get) => ({
   loading: false,
   error: null,
   total: 0,
+  hasMore: true,
   fetchExpenses: async (filters = {}, page = 1) => {
     set({ loading: true, error: null });
     try {
       const res = await api.get('/expenses', { params: { ...filters, page } });
-      set({ list: res.data.items, total: res.data.total });
+      const data = res.data;
+
+      // Normalize response: API might return a raw array or an object { items, total }
+      let items: Expense[] = [];
+      let total = 0;
+
+      if (Array.isArray(data)) {
+        items = data;
+        total = data.length;
+      } else {
+        items = data?.items ?? [];
+        total = data?.total ?? items.length;
+      }
+
+      set((state) => {
+        if (page === 1) {
+          return { list: items, total, hasMore: items.length > 0 } as Partial<ExpenseState>;
+        }
+        // append for subsequent pages; if empty items, keep existing list
+        return {
+          list: items.length > 0 ? [...state.list, ...items] : state.list,
+          total,
+          hasMore: items.length > 0,
+        } as Partial<ExpenseState>;
+      });
     } catch (err: any) {
       set({ error: err?.response?.data?.message || err.message });
     } finally {
