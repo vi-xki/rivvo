@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# rivoo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**rivoo** is a modern, feature-rich personal finance management dashboard designed to help users track expenses, manage budgets, and gain insights into their spending habits. Built with performance and user experience in mind, it provides a seamless interface for financial tracking.
 
-Currently, two official plugins are available:
+## Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **📊 Interactive Dashboard:** A central hub providing an at-a-glance overview of your current financial status.
+*   **💸 Expense Tracking:** Easily log and categorize daily transactions to keep accurate records of your spending.
+*   **📉 Smart Insights:** Detailed data visualizations (powered by Recharts) to analyze spending trends and patterns over time.
+*   **💰 Budget Management:** Set monthly limits and monitor progress to stay within your financial goals.
+*   **📜 Transaction History:** A searchable and filterable log of all past financial activities.
+*   **🔐 Authentication:** Secure Login and Signup flows for user data protection.
+*   **⚙️ Settings:** Customizable user preferences.
 
-## React Compiler
+## Technology Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+*   **Core:** [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vitejs.dev/)
+*   **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+*   **State Management:** [Zustand](https://github.com/pmndrs/zustand) for a lightweight and scalable store.
+*   **Visualization:** [Recharts](https://recharts.org/) for responsive and composed charts.
+*   **Utilities:**
+    *   `date-fns` for robust date manipulation.
+    *   `axios` for API integration.
+    *   `clsx` & `tailwind-merge` for efficient class name management.
+*   **UI/UX:**
+    *   `lucide-react` for beautiful, consistent iconography.
+    *   `canvas-confetti` for celebratory interaction effects.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  **Clone the repository**
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    pnpm install
+    ```
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    # or
+    pnpm dev
+    ```
