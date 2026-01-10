@@ -4,6 +4,7 @@ import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { useExpenses } from '@/store/useExpenses';
 import { useToast } from '@/components/ui/Toast';
+import api from '@/services/api';
 
 type Props = { open: boolean; onClose: () => void };
 
@@ -24,6 +25,22 @@ export default function AddExpense({ open, onClose }: Props) {
   const [recurring, setRecurring] = useState(false);
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
+  const [catList, setCatList] = useState<typeof defaultCategories>(defaultCategories);
+  useEffect(() => {
+    let mounted = true;
+    api.get('/categories/list').then((res) => {
+      if (!mounted) return;
+      const data = res.data;
+      if (Array.isArray(data) && data.length > 0) {
+        setCatList(data);
+        // if current category not present in fetched list, reset to first fetched id
+        if (!data.find((c: any) => String(c.id) === category)) {
+          setCategory(String(data[0].id));
+        }
+      }
+    }).catch(() => {});
+    return () => { mounted = false; };
+  }, []);
   const addExpenseOpt = useExpenses((s) => s.addExpense);
   const toast = useToast();
 
@@ -53,12 +70,14 @@ export default function AddExpense({ open, onClose }: Props) {
       return;
     }
     setLoading(true);
+    const selected = catList.find((c) => String(c.id) === category);
+    const resolvedCategoryId = selected ? selected.id : (Number.isNaN(Number(category)) ? category : Number(category));
     const payload = {
       amount: amt,
-      category: { id: category, name: defaultCategories.find((c) => c.id === category)?.name },
+      categoryId: resolvedCategoryId,
       date,
       note,
-      recurring: recurring ? { pattern: 'monthly' } : null,
+      recurring: recurring ? { pattern: 'monthly' } : undefined,
     } as any;
 
     const res = await addExpenseOpt(payload);
@@ -75,8 +94,8 @@ export default function AddExpense({ open, onClose }: Props) {
     }
   }, [amount, category, date, note, recurring, quickAdd, addExpenseOpt, toast, onClose]);
 
-  // categories filtered by query
-  const categories = defaultCategories.filter((c) => c.name.toLowerCase().includes(query.toLowerCase()));
+  // categories filtered by query (from server when available)
+  const categories = catList.filter((c) => c.name.toLowerCase().includes(query.toLowerCase()));
 
   // keyboard handlers
   useEffect(() => {
@@ -121,7 +140,7 @@ export default function AddExpense({ open, onClose }: Props) {
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">Press <kbd>Enter</kbd> to submit or <kbd>Esc</kbd> to cancel</div>
+          {/* <div className="text-sm text-muted-foreground">Press <kbd>Enter</kbd> to submit or <kbd>Esc</kbd> to cancel</div> */}
           <div className="flex gap-2">
             <Button type="button" variant="ghost" onClick={onClose} disabled={loading}>Cancel</Button>
             <Button type="submit" disabled={loading}>{loading ? 'Adding…' : 'Add'}</Button>
